@@ -6,6 +6,14 @@
     "react-scripts": "1.0.10"
   },
   "dependencies": {
+    "eslint": "^4.2.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-config-standard-react": "^5.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.1.0",
+    "eslint-plugin-standard": "^3.0.1",
     "jquery": "^3.2.1",
     "jss": "^8.1.0",
     "jss-preset-default": "^3.0.0",
@@ -21,5 +29,26 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "extends": [
+      "standard",
+      "standard-react"
+    ],
+    "globals": {},
+    "parser": "babel-eslint",
+    "plugins": [],
+    "root": true,
+    "rules": {
+      "brace-style": [
+        "error",
+        "stroustrup"
+      ],
+      "react/react-in-jsx-scope": "off"
+    }
   }
 }

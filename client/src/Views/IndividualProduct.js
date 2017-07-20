@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import injectSheet from 'react-jss'
 import PropTypes from 'prop-types'
 import $ from 'jquery'
+import UserInfoForm from '../Forms/UserInfoForm'
 
 const propTypes = {
   classes: PropTypes.object.isRequired,
@@ -57,36 +58,66 @@ class IndividualProduct extends Component {
       productId: this.props.match.params.productID,
       products: null
     }
-  }
-  componentWillMount = (context) => {
-    context.setProductIdState(this.props.match.params.productID,)
+    this.getProducts = this.getProducts.bind(this)
+    this.getSelectedProductDetails = this.getSelectedProductDetails.bind(this)
   }
 
-  render (props, context) {
-    const ProductId = Number(context.productId)
-    const product = context.products.find(p => Number(p.productId) === ProductId)
-    return (
-      <div>
-        <h1> hello world</h1>
-        <div className={this.props.classes.ProductFlexbox}>
-          <div className={this.props.classes.Image}>
-            <img width='50%' src={product.imageURL} alt='display unavailable' />
+  getProducts () {
+    $.ajax({
+      url: '/products',
+      method: 'GET'
+    }).done((data) => {
+      this.setState({products: data.results.data})
+    })
+  }
+
+  getSelectedProductDetails () {
+    $.ajax({
+      url: `/products/productId`,
+      method: 'GET'
+    }).done((data) => {
+      console.log('details:', data)
+    })
+  }
+
+  componentWillMount () {
+    this.getProducts()
+    this.getSelectedProductDetails()
+  }
+
+  findProduct () {
+    if (this.state.products !== null) {
+      console.log(this.state.products)
+      const ProductId = Number(this.state.productId)
+      const product = this.state.products.find(p => Number(p.productID) === ProductId)
+      return (
+        <div>
+          <div className={this.props.classes.ProductFlexbox}>
+            <div className={this.props.classes.Image}>
+              <img width='50%' src={product.imageURL} alt='display unavailable' />
+            </div>
+            <div className={this.props.classes.ProductDetails}>
+              <h1 className={this.props.classes.Title}>Name: {product.name}</h1>
+            </div>
           </div>
-          <div className={this.props.classes.ProductDetails}>
-            <h1 className={this.props.classes.Title}>Name: {product.name}</h1>
-            <div><Link to={`/products/${product.productID}/newplan`}><button className={this.props.classes.Buttons}><h4>PICK YOUR PLAN</h4></button></Link></div>
-          </div>
+          <UserInfoForm />
         </div>
-      </div>
+      )
+    }
+    else {
+      return (
+        <h1>Loading...</h1>
+      )
+    }
+  }
+
+  render (props) {
+    return (
+      this.findProduct()
     )
   }
 }
 
 IndividualProduct.propTypes = propTypes
-
-ProductsDisplay.contextTypes = {
-  products: React.PropTypes.object,
-  productId: React.propTypes.number
-}
 
 export default enhancer(IndividualProduct)

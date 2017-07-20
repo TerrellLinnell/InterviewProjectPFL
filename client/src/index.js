@@ -1,27 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import './index.css';
-import App from './Components/App';
+import './index.css'
+import App from './Components/App'
 import IndividualProduct from './Views/IndividualProduct'
-import registerServiceWorker from './registerServiceWorker';
+import registerServiceWorker from './registerServiceWorker'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
 injectTapEventPlugin()
 
 ReactDOM.render(
   <div>
-      <Router>
+    <Router>
+      <Route>
         <Switch>
           <Route exact path='/products' component={App} />
           <Route path='/products/:productID' render={(props => (<IndividualProduct {...props} />))} />
         </Switch>
-      </Router>
+      </Route>
+    </Router>
   </div>,
   document.getElementById('root')
-);
-registerServiceWorker();
-
+)
+registerServiceWorker()
 
 // <Route path='/phones/:phoneId/newplan' render={(props => (<NewPlans {...props} />))} />
 // <Route path='/phones/:phoneId/:planId/:gbTopUp/number' render={(props => (<NumberSelection {...props} />))} />

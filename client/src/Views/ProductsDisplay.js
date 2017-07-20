@@ -1,5 +1,6 @@
 import React from 'react'
 import injectSheet from 'react-jss'
+import {Link} from 'react-router-dom'
 
 const styles = {
   header: {
@@ -37,6 +38,28 @@ const styles = {
     bottom: '0',
     backgroundColor: 'rgba(0,0,0,0.5)',
     zIndex: '2'
+  },
+  ProductItems: {
+    width: 'calc(21%)',
+    '& a': {
+      textDecorationColor: '#1E90FF'
+    }
+  },
+  ProductItemsFlexbox: {
+    color: '#1E90FF',
+    textDecorationColor: '#1E90FF',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    textAlign: 'center',
+    height: '100%'
+  },
+  ProductImages: {
+    padding: '5% 0 5% 0',
+    width: '100%',
+    height: '100%',
+    border: '1px solid grey'
   }
 }
 
@@ -44,6 +67,25 @@ const enhancer = injectSheet(styles)
 
 const ProductsDisplay = (props) => {
   const {classes} = props
+
+  const mapProducts =
+    props.products.map((item) => {
+      return (
+        <div className={classes.ProductItems}>
+          <Link to={`/products/${item.productID}`}>
+            <div className={classes.ProductItemsFlexbox}>
+              <div className={classes.ProductImages}>
+                <img width='60%' src={item.imageURL} alt='display currently unavailable' />
+              </div>
+              <div>
+                <h5>{item.name}</h5>
+              </div>
+            </div>
+          </Link>
+        </div>
+      )
+    })
+
   return (
     <div>
       <div className={classes.header}>
@@ -51,15 +93,11 @@ const ProductsDisplay = (props) => {
           <h1> Products </h1>
         </div>
       </div>
-        <div className={classes.Flexbox2}>
-          {context.products === null ? <h1>Please wait while we retrieve the products for you</h1> : props.mapProducts()}
+      <div className={classes.Flexbox2}>
+        {mapProducts}
       </div>
     </div>
   )
-}
-
-ProductsDisplay.contextTypes = {
-  products: React.PropTypes.object
 }
 
 export default enhancer(ProductsDisplay)
