@@ -1,6 +1,6 @@
 # InterviewProjectPFL
 
-### This is a project assigned to me for as part of the interview process for Printing For Less.
+* This is a project assigned to me as part of the interview process at Printing For Less.
 
 ## Installation
 
