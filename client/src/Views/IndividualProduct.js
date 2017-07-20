@@ -97,10 +97,10 @@ class IndividualProduct extends Component {
               <img width='50%' src={product.imageURL} alt='display unavailable' />
             </div>
             <div className={this.props.classes.ProductDetails}>
-              <h1 className={this.props.classes.Title}>Name: {product.name}</h1>
+              <h1 className={this.props.classes.Title}>{product.name}</h1>
             </div>
           </div>
-          <UserInfoForm />
+          <UserInfoForm productId={this.state.productId} />
         </div>
       )
     }
